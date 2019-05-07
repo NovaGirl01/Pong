@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title> Pong Game </title>
+		<script src="simply.js"> </script>
+		<script>
+			function start(){
+				sjs.open();
+
+				//Ball
+				var ball = new sjs.Image("Images/spike.png");
+				ball.type = "ball";
+				ball.setSize(50,50);
+				ball.center();
+				ball.friction = 0;
+				ball.pushRight(3)
+				ball.pushUp(2)
+				ball.bounce();
+
+				//Paddle 1
+				var paddle1 = new sjs.Image("Images/blue.png");
+				paddle1.type = "paddle";
+				paddle1.centerH();
+				paddle1.setSize(100,20);
+				
+				//Paddle 2
+				var paddle2 = new sjs.Image("Images/red.png");
+				paddle2.type = "paddle";
+				paddle2.center().bottom();
+				paddle2.setSize(100,20);
+				
+				//Paddle 3
+				var paddle3 = new sjs.Image("Images/green.png");
+				paddle3.type = "paddle";
+				paddle3.center() .right();
+				paddle3.setSize(15,100);
+				
+				//Paddle 4
+				var paddle4 = new sjs.Image("Images/pink.png");
+				paddle4.type = "paddle";
+				paddle4.center() .left();
+				paddle4.setSize(15,100);
+				
+				var score = 0;
+				var score_txt = new sjs.Text("Score: "+score, 21, "red");
+				score_txt.center();
+				
+				sjs.keyDown(DOWN_KEY, function(){
+				paddle4.pushDown(2);
+				paddle3.pushDown(2);
+				});
+				sjs.keyDown(UP_KEY, function(){
+				paddle4.pushUp(2);
+				paddle3.pushUp(2);
+				});
+				sjs.keyDown(LEFT_KEY, function(){
+				paddle1.pushLeft(2);
+				paddle2.pushLeft(2);
+				});
+				sjs.keyDown(RIGHT_KEY, function(){
+				paddle1.pushRight(2);
+				paddle2.pushRight(2);
+				});
+
+				
+				sjs.onHit("ball", "paddle", function(ball, paddle){
+				score++;
+				console.log(score);
+				score_txt.setText("score: "+score);
+				sjs.bounceOff(ball, paddle);
+				});
+				
+			} //end start
+		</script>
+	</head>
+	<body onload="start()">
+		<h1> Pong </h1>
+
+		<div id="target" style="margin:auto;background:grey;"></div>
+	</body>
+</html>
